@@ -2,7 +2,7 @@ import { Button, Col, Container, Form, Row, Spinner } from 'react-bootstrap'
 import "bootstrap/dist/css/bootstrap.min.css";
   import { useForm } from "react-hook-form";
 import { useState } from 'react';
-import OpenAI from "openai";
+import axios from 'axios'
 import { apiKey } from './config';
 
 
@@ -17,27 +17,24 @@ const {
   } = useForm()
 
   const onSubmit = async (data) => {
-        console.log(apiKey);
+         const response = await axios
+           .post("https://db8s1l.buildship.run/talk-to-sheets", data.question, {
+             headers: {
+               "Content-Type": "text/plain", // Set the content type to text/plain
+             },
+           })
+           .then((response) => {
+             console.log(response.data); // Handle the response data
+           })
+           .catch((error) => {
+             console.error(
+               "There was a problem with the axios request:",
+               error
+             );
+           });
 
-    const openai = new OpenAI({
-      apiKey: apiKey ,
-      dangerouslyAllowBrowser: true,
-    });
 
-    const response = await openai.completions.create({
-      model: "gpt-3.5-turbo-instruct",
-      prompt: data.question,
-      temperature: 1,
-      max_tokens: 256,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
-    });
-
-
-    console.log(response)
-    setMessage(response)
-  }
+    console.log(response)  }
 
 
   return (
@@ -54,7 +51,7 @@ const {
           submit
         </Button>
       </Form>
-      <p>{message}</p>
+      <p></p>
     </Container>
   );
 }
