@@ -9,7 +9,21 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    <script src="https://unpkg.com/@buildshipapp/chat-widget@^1" defer></script>
+ <script src="https://unpkg.com/@buildshipapp/chat-widget@^1" defer></script>
+<script>
+    window.addEventListener("load", () => {
+        window.buildShipChatWidget.config.url = "https://db8s1l.buildship.run/talk-to-sheets";
+    })
+</script>
+
+<!-- Button to open the widget -->
+<button data-buildship-chat-widget-button>Click here for an AI assistant</button>
+
+
+
+
+
+
 
   </body>
 </html>
